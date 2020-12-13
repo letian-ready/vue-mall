@@ -1,28 +1,44 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div id="app">
+    <router-view></router-view>
+  </div>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'App',
+  name: 'app',
   components: {
-    HelloWorld
+    
+  },
+  data(){
+    return {
+      
+    }
+  },
+  mounted(){
+    if(this.$cookie.get('userId')){
+      this.getUser();
+      this.getCartCount();
+    }
+  },
+  methods:{
+    getUser(){
+      this.axios.get('/user').then((res={})=>{
+        this.$store.dispatch('saveUserName',res.username);
+      })
+    },
+    getCartCount(){
+      this.axios.get('/carts/products/sum').then((res=0)=>{
+        this.$store.dispatch('saveCartCount',res);
+      })
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss">
+
 </style>
