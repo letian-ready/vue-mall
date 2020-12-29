@@ -8,6 +8,9 @@
 </template>
 
 <script>
+
+// import jsonp from 'jsonp'
+
 export default {
   name: 'app',
   components: {
